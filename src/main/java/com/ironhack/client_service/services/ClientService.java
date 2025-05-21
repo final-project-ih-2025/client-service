@@ -17,7 +17,7 @@ public class ClientService {
     ClientRepository clientRepository;
 
     // recibir un usuario por ID
-    Client findClientById(Long id) {
+    public Client findClientById(Long id) throws ClientNotFoundException {
         Optional<Client> foundClient = clientRepository.findById(id);
 
         if (foundClient.isPresent()) {
