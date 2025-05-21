@@ -1,5 +1,6 @@
 package com.ironhack.client_service.services;
 
+import com.ironhack.client_service.exceptions.ClientNotFoundException;
 import com.ironhack.client_service.models.Client;
 import com.ironhack.client_service.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,13 @@ public class ClientService {
     ClientRepository clientRepository;
 
     // recibir un usuario por ID
-    ResponseEntity<?> findClientById(Long id) {
+    Client findClientById(Long id) {
         Optional<Client> foundClient = clientRepository.findById(id);
 
         if (foundClient.isPresent()) {
-            return new ResponseEntity<>(foundClient, HttpStatus.OK);
+            return foundClient.get();
         } else {
-            return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
+            throw new ClientNotFoundException("Cliente no encontrado");
         }
-
     }
 }
